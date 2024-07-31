@@ -2,6 +2,9 @@ import uvicorn
 from fastapi import FastAPI
 from data_base import database
 from routers.user_router import router as router_user
+from routers.item_router import router as router_item
+from routers.order_router import router as router_order
+
 
 app = FastAPI()
 
@@ -17,6 +20,8 @@ async def shutdown():
 
 
 app.include_router(router_user, tags=['users'])
+app.include_router(router_item, tags=['items'])
+app.include_router(router_order, tags=['orders'])
 
 if __name__ == '__main__':
     uvicorn.run(

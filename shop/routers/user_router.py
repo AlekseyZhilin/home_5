@@ -42,3 +42,16 @@ async def delete_user(user_id: int):
     query = users.delete().where(users.c.id == user_id)
     await database.execute(query)
     return {'message': 'user deleted'}
+
+
+@router.get("/fake_users/{count}", response_model=dict)
+async def create_fake_users(count: int):
+    for i in range(1, count + 1):
+        query = users.insert().values(first_name=f'first_name_{i}',
+                                      last_name=f'last_name_{i}',
+                                      email=f'{i}@mail.ru',
+                                      password=f'{i}{i}{i}111',
+                                      )
+        await database.execute(query)
+
+    return {'message': f'{count} fake users create'}

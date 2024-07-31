@@ -34,5 +34,10 @@ class UserIn(BaseModel):
 
 class Order(BaseModel):
     id: int
-    items: List[Item]
+    items: Item
+    user: User
+
+
+class OrderIn(BaseModel):
+    items: Item
     user: User

@@ -1,6 +1,6 @@
 import databases
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, ForeignKey
 from settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
@@ -24,6 +24,13 @@ items = sqlalchemy.Table("items",
                          sqlalchemy.Column("price", sqlalchemy.Float)
                          )
 
+
+orders = sqlalchemy.Table("orders",
+                          metadata,
+                          sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
+                          sqlalchemy.Column("id_user", sqlalchemy.Integer, ForeignKey('users.id')),
+                          sqlalchemy.Column("id_item", sqlalchemy.Integer, ForeignKey('items.id')),
+                          )
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 metadata.create_all(engine)
