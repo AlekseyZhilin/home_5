@@ -18,8 +18,15 @@ async def read_user(user_id: int):
     return await database.fetch_one(query)
 
 
-@router.post('/users', response_model=UserIn)
+@router.post('/users', response_model=dict)
 async def create_user(new_user: UserIn):
+    query_email = users.select().where(users.c.email == new_user.email)
+    exist_email = await database.fetch_one(query_email)
+    if exist_email:
+        return {'result': f'email {new_user.email} exist'}
+
+    new_user.set_password(new_user.password)
+
     query = users.insert().values(
         first_name=new_user.first_name,
         last_name=new_user.last_name,
@@ -27,7 +34,7 @@ async def create_user(new_user: UserIn):
         password=new_user.password
     )
     await database.execute(query)
-    return new_user
+    return {'result': new_user}
 
 
 @router.put('/users/{user_id}', response_model=UserIn)

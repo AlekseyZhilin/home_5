@@ -1,7 +1,7 @@
 import random
 
 from fastapi import APIRouter
-from shop.data_base import orders, users, items, database
+from shop.data_base import orders, database
 from shop.models import Order, OrderIn
 from typing import List
 

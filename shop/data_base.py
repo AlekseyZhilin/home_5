@@ -13,7 +13,7 @@ users = sqlalchemy.Table("users",
                          sqlalchemy.Column("first_name", sqlalchemy.String(32)),
                          sqlalchemy.Column("last_name", sqlalchemy.String(32)),
                          sqlalchemy.Column("email", sqlalchemy.String(128)),
-                         sqlalchemy.Column("password", sqlalchemy.String(16))
+                         sqlalchemy.Column("password", sqlalchemy.String(256))
                          )
 
 items = sqlalchemy.Table("items",
